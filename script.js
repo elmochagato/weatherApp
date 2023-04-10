@@ -45,6 +45,11 @@ search.addEventListener('click', () => {
                     image.src = 'images/rain.png';
                     document.body.style.backgroundImage = "url('images/rainbg.jpg')";
                     break;
+                 
+                case 'Drizzle':
+                    image.src = 'images/rain.png';
+                    document.body.style.backgroundImage = "url('images/drizzlebg.jpg')";
+                    break;
 
                 case 'Snow':
                     image.src = 'images/snow.png';
