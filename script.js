@@ -112,15 +112,16 @@ function getLocation() {
     var apiKey = "745141ddd0c547169b9c3c25e995fc7d"; // replace with your API key
     var url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
   
+const city = document.querySelector('.search-box input').value;
+
+    if (city === '')
+        return;
     fetch(url)
       .then(response => response.json())
       .then(data => {
         // Get the city from the API response
         var city = data.results[0].components.city;
-  
-        // Update the input placeholder with the user's city
-        var input = document.getElementById("location-input");
-        input.value = city;
+  ;
       })
       .catch(error => console.error(error));
   }
