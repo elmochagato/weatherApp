@@ -3,10 +3,11 @@ const search = document.querySelector('.search-box button');
 const weatherBox = document.querySelector('.weather-box');
 const weatherDetails = document.querySelector('.weather-details');
 const error404 = document.querySelector('.not-found');
-const myIcon = document.querySelector('i');
+const myIcon = document.querySelector('.fa-location-arrow');
 
 myIcon.addEventListener('click', () => {
   // code to execute when the icon is clicked
+  getLocation();
 });
 
 search.addEventListener('click', () => {
@@ -92,6 +93,7 @@ search.addEventListener('click', () => {
 
 });
 
+
 // Get the user's current geolocation
 function getLocation() {
     if (navigator.geolocation) {
@@ -105,7 +107,7 @@ function getLocation() {
   function showPosition(position) {
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-  
+
     // Use the OpenCage API to get the city based on the latitude and longitude
     var apiKey = "745141ddd0c547169b9c3c25e995fc7d"; // replace with your API key
     var url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
