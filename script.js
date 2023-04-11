@@ -112,10 +112,6 @@ function getLocation() {
     var apiKey = "745141ddd0c547169b9c3c25e995fc7d"; // replace with your API key
     var url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
   
-const city = document.querySelector('.search-box input').value;
-
-    if (city === '')
-        return;
     fetch(url)
       .then(response => response.json())
       .then(data => {
