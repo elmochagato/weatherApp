@@ -93,6 +93,11 @@ search.addEventListener('click', () => {
 
 });
 
+const options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0,
+};
 
 // Get the user's current geolocation
 function getLocation() {
@@ -103,25 +108,68 @@ function getLocation() {
     }
   }
   
-  // Show the user's current position (latitude and longitude)
   function showPosition(position) {
-    var latitude = position.coords.latitude;
-    var longitude = position.coords.longitude;
+    let latitude = position.coords.latitude;
+    let longitude = position.coords.longitude;
+    let query = latitude + ',' + longitude;
+    
+  
+ 
+    
+      var api_key = '745141ddd0c547169b9c3c25e995fc7d';
 
-    // Use the OpenCage API to get the city based on the latitude and longitude
-    var apiKey = "745141ddd0c547169b9c3c25e995fc7d"; // replace with your API key
-    var url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
-  
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        // Get the city from the API response
-        var city = data.results[0].components.city;
-  ;
-      })
-      .catch(error => console.error(error));
+      
+      // forward geocoding example (address to coordinate)
+      // var query = 'Philipsbornstr. 2, 30165 Hannover, Germany';
+      // note: query needs to be URI encoded (see below)
+    
+      var api_url = 'https://api.opencagedata.com/geocode/v1/json'
+    
+      var request_url = api_url
+        + '?'
+        + 'key=' + api_key
+        + '&q=' + encodeURIComponent(query)
+        + '&abbrv=1'
+        + '&address_only=0'
+        + '&roadinfo=1';
+        
+    
+      // see full list of required and optional parameters:
+      // https://opencagedata.com/api#forward
+    
+      var request = new XMLHttpRequest();
+      request.open('GET', request_url, true);
+    
+      request.onload = function() {
+        // see full list of possible response codes:
+        // https://opencagedata.com/api#codes
+    
+        if (request.status === 200){
+          // Success!
+          var data = JSON.parse(request.responseText);
+          let city = (data.results[0].formatted);
+          let input = document.getElementById("location-input");
+         input.value = city;
+    
+        } else if (request.status <= 500){
+          // We reached our target server, but it returned an error
+    
+          console.log("unable to geocode! Response code: " + request.status);
+          var data = JSON.parse(request.responseText);
+          console.log('error msg: ' + data.status.message);
+        } else {
+          console.log("server error");
+        }
+      };
+    
+      request.onerror = function() {
+        // There was a connection error of some sort
+        console.log("unable to connect to server");
+      };
+    
+      request.send();  // make the request
   }
-  
+
   // Handle geolocation errors
   function showError(error) {
     switch(error.code) {
