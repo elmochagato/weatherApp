@@ -63,7 +63,7 @@ search.addEventListener('click', () => {
 
                 case 'Haze':
                     image.src = 'images/mist.png';
-                    document.body.style.backgroundImage = "url('images/mist.jpg')";
+                    document.body.style.backgroundImage = "url('images/hazebg.jpg')";
                     break;
 
                 default:
