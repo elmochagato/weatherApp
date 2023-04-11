@@ -20,6 +20,7 @@ body{
     background-image: url('./images/defaultbg.jpg');
     -webkit-transition: background-image 0.8s ease-in-out;
     transition: background-image 0.8s ease-in-out;
+    background-size: cover;
 }
 
 .container{
