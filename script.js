@@ -120,7 +120,7 @@ function getLocation() {
   
         // Update the input placeholder with the user's city
         var input = document.getElementById("location-input");
-        input.placeholder = city;
+        input.value = city;
       })
       .catch(error => console.error(error));
   }
