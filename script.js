@@ -93,11 +93,6 @@ search.addEventListener('click', () => {
 
 });
 
-const options = {
-  enableHighAccuracy: true,
-  timeout: 5000,
-  maximumAge: 0,
-};
 
 // Get the user's current geolocation
 function getLocation() {
@@ -130,9 +125,8 @@ function getLocation() {
         + 'key=' + api_key
         + '&q=' + encodeURIComponent(query)
         + '&abbrv=1'
-        + '&address_only=0'
-        + '&roadinfo=1';
-        
+        + '&address_only=1'
+        + '&pretty=1';
     
       // see full list of required and optional parameters:
       // https://opencagedata.com/api#forward
