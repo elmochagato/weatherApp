@@ -3,6 +3,11 @@ const search = document.querySelector('.search-box button');
 const weatherBox = document.querySelector('.weather-box');
 const weatherDetails = document.querySelector('.weather-details');
 const error404 = document.querySelector('.not-found');
+const myIcon = document.querySelector('i');
+
+myIcon.addEventListener('click', () => {
+  // code to execute when the icon is clicked
+});
 
 search.addEventListener('click', () => {
 
@@ -86,3 +91,52 @@ search.addEventListener('click', () => {
 
 
 });
+
+// Get the user's current geolocation
+function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+  
+  // Show the user's current position (latitude and longitude)
+  function showPosition(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+  
+    // Use the OpenCage API to get the city based on the latitude and longitude
+    var apiKey = "745141ddd0c547169b9c3c25e995fc7d"; // replace with your API key
+    var url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
+  
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        // Get the city from the API response
+        var city = data.results[0].components.city;
+  
+        // Update the input placeholder with the user's city
+        var input = document.getElementById("location-input");
+        input.placeholder = city;
+      })
+      .catch(error => console.error(error));
+  }
+  
+  // Handle geolocation errors
+  function showError(error) {
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        alert("User denied the request for Geolocation.");
+        break;
+      case error.POSITION_UNAVAILABLE:
+        alert("Location information is unavailable.");
+        break;
+      case error.TIMEOUT:
+        alert("The request to get user location timed out.");
+        break;
+      case error.UNKNOWN_ERROR:
+        alert("An unknown error occurred.");
+        break;
+    }
+  }
